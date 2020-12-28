@@ -1,0 +1,19 @@
+{
+  "name": "AmazonUrlShortcut",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Amazon商品ページに短縮URLコピー用のボタンを追加する",
+  "content_scripts": [{
+    "matches": [
+      "https://www.amazon.co.jp/dp/*",
+      "https://www.amazon.co.jp/gp/*"
+    ],
+    "js": [
+      "dist/js/chunk-vendors.js",
+      "dist/js/app.js"
+    ],
+    "css": [
+      "dist/css/app.css"
+    ]
+  }]
+}
