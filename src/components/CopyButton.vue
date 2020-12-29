@@ -36,7 +36,7 @@ export default defineComponent({
       switch (names[typeIndex]) {
         case 'dp':
           // 商品ページの場合
-          navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 1).join('/')}`);
+          navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 2).join('/')}`);
           break;
 
         case 'gp':
@@ -45,7 +45,7 @@ export default defineComponent({
             navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 4).join('/')}`);
           } else {
             // 検索エンジンからの流入用ページの場合
-            navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 2).join('/')}`);
+            navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 3).join('/')}`);
           }
           break;
       }
