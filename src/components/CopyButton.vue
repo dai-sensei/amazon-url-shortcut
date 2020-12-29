@@ -1,5 +1,5 @@
 <template>
-  <div class="button">
+  <div class="copy-content">
     <a
       ref="#"
       class="copy-button"
@@ -27,17 +27,29 @@ export default defineComponent({
     function copyUrl () {
       const protocol = location.protocol;
       const host = location.host;
-      const list = location.pathname.split('/');
-      let url = '';
+      const names = location.pathname.split('/');
+      const typeIndex = names.findIndex(name => name === 'dp' || name === 'gp');
+      const isVideo = names.findIndex(name => name === 'video');
 
-      if (list[2] === 'dp') {
-        url = `${protocol}//${host}/${list[2]}/${list[3]}`;
-      } else if (list[1] === 'dp') {
-        url = `${protocol}//${host}/${list[1]}/${list[2]}`;
-      } else if (list[1] === 'gp') {
-        url = `${protocol}//${host}/${list[1]}/${list[2]}/${list[3]}`;
+      if (!typeIndex) return;
+
+      switch (names[typeIndex]) {
+        case 'dp':
+          // 商品ページの場合
+          navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 1).join('/')}`);
+          break;
+
+        case 'gp':
+          if (isVideo) {
+            // プライムビデオのページの場合
+            navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 4).join('/')}`);
+          } else {
+            // 検索エンジンからの流入用ページの場合
+            navigator.clipboard.writeText(`${protocol}//${host}/${names.slice(typeIndex, typeIndex + 2).join('/')}`);
+          }
+          break;
       }
-      navigator.clipboard.writeText(url);
+
       visible.value = false;
 
       // 2秒後にメッセージのテキストを消す
@@ -55,15 +67,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.button {
+.copy-content {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+  height: 100%;
+  margin-bottom: 10px !important;
   border-radius: 0.5rem;
   text-align: center;
   background-color: #8CD460;
 }
-.button:hover {
+.copy-content:hover {
   color:white;
   opacity: 0.8;
 }
@@ -72,11 +84,13 @@ export default defineComponent({
   font-weight: bold;
   color:white;
   text-decoration: none;
+  display: block;
+  padding: 10px;
 }
 .copy-message {
   text-align: center;
   width: 100%;
   color: #8CD460;
-  margin-bottom: 10px;
+  margin-bottom: 10px !important
 }
 </style>
